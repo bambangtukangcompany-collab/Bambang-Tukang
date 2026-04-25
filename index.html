@@ -1,0 +1,1036 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bambang Tukang</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Plus Jakarta Sans', 'sans-serif'] },
+                    colors: {
+                        brand: {
+                            50: '#F0FDF9', 100: '#CCFBEF', 200: '#9AF5DF', 300: '#5DE9CB',
+                            400: '#2BD4B0', 500: '#14B893', 600: '#0D9478', 700: '#0F7664',
+                            800: '#115E51', 900: '#134E43', 950: '#042F2E',
+                        },
+                        sand: {
+                            50: '#FEFDFB', 100: '#FDF8F0', 200: '#FAECD8', 300: '#F5D9B5',
+                            400: '#E8BA7A', 500: '#D4A373', 600: '#C08552', 700: '#A06A3F',
+                            800: '#845536', 900: '#6E472E',
+                        },
+                        cream: '#FDFBF7',
+                        charcoal: '#1E2925',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        ::selection { background: #0D9478; color: #fff; }
+        .glass-input { border-bottom: 1px solid rgba(30,41,37,0.15); transition: border-color 0.3s; }
+        .glass-input:focus { border-bottom-color: #0D9478; }
+        .hero-gradient { background: linear-gradient(135deg, #042F2E 0%, #115E51 40%, #0F7664 70%, #134E43 100%); }
+        .service-card:hover .service-icon { transform: scale(1.1); background: #0D9478; color: #fff; }
+        .service-icon { transition: all 0.4s cubic-bezier(0.4,0,0.2,1); }
+        .area-card:hover { transform: translateY(-4px); box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1); }
+        .area-card { transition: all 0.4s cubic-bezier(0.4,0,0.2,1); }
+        .fade-up { opacity: 0; transform: translateY(30px); transition: all 0.8s cubic-bezier(0.4,0,0.2,1); }
+        .fade-up.visible { opacity: 1; transform: translateY(0); }
+        .stat-number { background: linear-gradient(135deg, #0D9478, #2BD4B0); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        @keyframes float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+        .float-anim { animation: float 6s ease-in-out infinite; }
+        .float-anim-delay { animation: float 6s ease-in-out 2s infinite; }
+        .img-overlay { position: relative; overflow: hidden; }
+        .img-overlay::after { content: ''; position: absolute; inset: 0; background: linear-gradient(to top, rgba(4,47,46,0.5) 0%, transparent 60%); opacity: 0; transition: opacity 0.5s; }
+        .img-overlay:hover::after { opacity: 1; }
+        .img-overlay img { transition: transform 0.7s cubic-bezier(0.4,0,0.2,1); }
+        .img-overlay:hover img { transform: scale(1.05); }
+        .whatsapp-float { position: fixed; bottom: 24px; right: 24px; z-index: 999; }
+        .toast { transform: translateY(100px); opacity: 0; transition: all 0.4s cubic-bezier(0.4,0,0.2,1); }
+        .toast.show { transform: translateY(0); opacity: 1; }
+        html { scroll-behavior: smooth; }
+        .img-fallback { opacity: 0; transition: opacity 0.4s ease; }
+        .img-fallback.loaded { opacity: 1; }
+    </style>
+</head>
+<body class="font-sans text-charcoal bg-cream antialiased">
+
+    <!-- Navigation -->
+    <nav id="navbar" class="fixed top-0 left-0 right-0 z-50 transition-all duration-500">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="flex items-center justify-between py-5">
+                <a href="#beranda" class="flex items-center gap-3 group">
+                    <div class="w-10 h-10 rounded-xl bg-brand-600 flex items-center justify-center shadow-lg shadow-brand-600/30 group-hover:shadow-brand-600/50 transition-shadow">
+                        <span class="text-white font-bold text-lg">B</span>
+                    </div>
+                    <div>
+                        <span class="font-semibold text-lg tracking-tight nav-text-color transition-colors duration-300">Bambang Tukang</span>
+                        <span class="block text-[10px] uppercase tracking-[0.2em] nav-sub-color transition-colors duration-300 font-medium">Profesional & Terpercaya</span>
+                    </div>
+                </a>
+                <div class="hidden md:flex items-center gap-8">
+                    <a href="#layanan" class="text-sm font-medium nav-link-color hover:text-brand-600 transition-colors duration-300">Layanan</a>
+                    <a href="#tentang" class="text-sm font-medium nav-link-color hover:text-brand-600 transition-colors duration-300">Tentang</a>
+                    <a href="#area" class="text-sm font-medium nav-link-color hover:text-brand-600 transition-colors duration-300">Area</a>
+                    <a href="#portofolio" class="text-sm font-medium nav-link-color hover:text-brand-600 transition-colors duration-300">Portofolio</a>
+                    <a href="#kontak" class="inline-flex items-center gap-2 px-5 py-2.5 bg-brand-600 text-white text-sm font-medium rounded-xl hover:bg-brand-700 transition-all duration-300 shadow-lg shadow-brand-600/25 hover:shadow-brand-600/40 hover:-translate-y-0.5">
+                        Hubungi Kami
+                        <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                    </a>
+                </div>
+                <button id="menuBtn" class="md:hidden w-10 h-10 rounded-xl flex items-center justify-center nav-link-color transition-colors">
+                    <i data-lucide="menu" class="w-5 h-5"></i>
+                </button>
+            </div>
+        </div>
+        <div id="mobileMenu" class="md:hidden hidden bg-white/95 backdrop-blur-xl border-t border-gray-100 shadow-xl">
+            <div class="px-6 py-6 flex flex-col gap-4">
+                <a href="#layanan" class="mobile-link text-base font-medium text-charcoal hover:text-brand-600 py-2 transition-colors">Layanan</a>
+                <a href="#tentang" class="mobile-link text-base font-medium text-charcoal hover:text-brand-600 py-2 transition-colors">Tentang</a>
+                <a href="#area" class="mobile-link text-base font-medium text-charcoal hover:text-brand-600 py-2 transition-colors">Area</a>
+                <a href="#portofolio" class="mobile-link text-base font-medium text-charcoal hover:text-brand-600 py-2 transition-colors">Portofolio</a>
+                <a href="#kontak" class="inline-flex items-center justify-center gap-2 px-5 py-3 bg-brand-600 text-white font-medium rounded-xl mt-2">
+                    Hubungi Kami <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="beranda" class="hero-gradient relative min-h-screen flex items-center overflow-hidden">
+        <div class="absolute top-20 right-10 w-72 h-72 bg-brand-400/10 rounded-full blur-3xl float-anim"></div>
+        <div class="absolute bottom-20 left-10 w-96 h-96 bg-sand-400/10 rounded-full blur-3xl float-anim-delay"></div>
+        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] border border-white/5 rounded-full"></div>
+        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] border border-white/[0.03] rounded-full"></div>
+
+        <div class="max-w-7xl mx-auto px-6 py-32 lg:py-0 relative z-10 w-full">
+            <div class="grid lg:grid-cols-2 gap-16 items-center">
+                <div>
+                    <div class="inline-flex items-center gap-2 px-4 py-2 bg-white/10 backdrop-blur-md rounded-full border border-white/10 mb-8">
+                        <span class="w-2 h-2 bg-brand-400 rounded-full animate-pulse"></span>
+                        <span class="text-brand-200 text-xs font-medium uppercase tracking-wider">Tersedia untuk Proyek Anda</span>
+                    </div>
+                    <h1 class="text-4xl sm:text-5xl lg:text-6xl font-semibold text-white leading-[1.1] tracking-tight mb-6">
+                        Solusi Tukang
+                        <span class="block mt-2 bg-gradient-to-r from-brand-300 via-brand-200 to-sand-300 bg-clip-text text-transparent">Profesional</span>
+                        <span class="block mt-2 text-white/90">di Boyolali</span>
+                    </h1>
+                    <p class="text-lg text-white/60 leading-relaxed max-w-lg mb-10">
+                        Melayani pembangunan, renovasi rumah, dan pembuatan mebel berkualitas tinggi untuk wilayah Boyolali, Klaten, Surakarta, dan sekitarnya.
+                    </p>
+                    <div class="flex flex-wrap gap-4">
+                        <a href="https://wa.me/6289503948517?text=Halo%20Bambang%20Tukang,%20saya%20ingin%20konsultasi" target="_blank" class="inline-flex items-center gap-3 px-7 py-4 bg-white text-brand-900 font-medium rounded-2xl hover:bg-brand-50 transition-all duration-300 shadow-xl shadow-black/20 hover:-translate-y-1 group">
+                            <svg class="w-5 h-5 text-green-600" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                            Konsultasi Gratis
+                            <i data-lucide="arrow-up-right" class="w-4 h-4 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform"></i>
+                        </a>
+                        <a href="#layanan" class="inline-flex items-center gap-2 px-7 py-4 border border-white/20 text-white font-medium rounded-2xl hover:bg-white/10 backdrop-blur-sm transition-all duration-300">
+                            Lihat Layanan
+                        </a>
+                    </div>
+                </div>
+                <div class="hidden lg:block relative">
+                    <div class="relative">
+                        <div class="absolute -inset-4 bg-gradient-to-br from-brand-400/20 to-sand-400/20 rounded-3xl blur-2xl"></div>
+                        <img
+                            src="tukang1.webp"
+                            data-fallback="tukang1.webp"
+                            alt="Renovasi Rumah Profesional"
+                            class="img-fallback relative rounded-3xl shadow-2xl shadow-black/30 w-full aspect-[4/5] object-cover"
+                            onload="this.classList.add('loaded')"
+                            onerror="this.onerror=null;this.src=this.dataset.fallback;this.classList.add('loaded');"
+                        >
+                        <div class="absolute -bottom-6 -left-6 bg-white/95 backdrop-blur-xl rounded-2xl p-5 shadow-xl float-anim">
+                            <div class="flex items-center gap-3">
+                                <div class="w-12 h-12 rounded-xl bg-brand-100 flex items-center justify-center">
+                                    <i data-lucide="hammer" class="w-6 h-6 text-brand-700"></i>
+                                </div>
+                                <div>
+                                    <div class="text-2xl font-bold text-brand-800">10+</div>
+                                    <div class="text-xs text-brand-600 font-medium">Tahun Pengalaman</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="absolute -top-4 -right-4 bg-white/95 backdrop-blur-xl rounded-2xl p-4 shadow-xl float-anim-delay">
+                            <div class="flex items-center gap-2 mb-1">
+                                <div class="flex">
+                                    <i data-lucide="star" class="w-3.5 h-3.5 text-amber-400 fill-amber-400"></i>
+                                    <i data-lucide="star" class="w-3.5 h-3.5 text-amber-400 fill-amber-400"></i>
+                                    <i data-lucide="star" class="w-3.5 h-3.5 text-amber-400 fill-amber-400"></i>
+                                    <i data-lucide="star" class="w-3.5 h-3.5 text-amber-400 fill-amber-400"></i>
+                                    <i data-lucide="star" class="w-3.5 h-3.5 text-amber-400 fill-amber-400"></i>
+                                </div>
+                            </div>
+                            <div class="text-xs text-charcoal/70 font-medium">100+ Proyek Selesai</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2">
+            <span class="text-white/30 text-xs uppercase tracking-widest">Scroll</span>
+            <div class="w-5 h-8 rounded-full border-2 border-white/20 flex justify-center pt-1.5">
+                <div class="w-1 h-2 bg-white/40 rounded-full animate-bounce"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Bar -->
+    <section class="bg-white border-b border-gray-100">
+        <div class="max-w-7xl mx-auto px-6 py-10">
+            <div class="grid grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12">
+                <div class="text-center fade-up">
+                    <div class="text-3xl lg:text-4xl font-bold stat-number mb-1" data-count="100">0+</div>
+                    <div class="text-sm text-charcoal/50 font-medium">Proyek Selesai</div>
+                </div>
+                <div class="text-center fade-up">
+                    <div class="text-3xl lg:text-4xl font-bold stat-number mb-1" data-count="10">0+</div>
+                    <div class="text-sm text-charcoal/50 font-medium">Tahun Pengalaman</div>
+                </div>
+                <div class="text-center fade-up">
+                    <div class="text-3xl lg:text-4xl font-bold stat-number mb-1" data-count="50">0+</div>
+                    <div class="text-sm text-charcoal/50 font-medium">Klien Puas</div>
+                </div>
+                <div class="text-center fade-up">
+                    <div class="text-3xl lg:text-4xl font-bold stat-number mb-1" data-count="4">0</div>
+                    <div class="text-sm text-charcoal/50 font-medium">Area Layanan</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="layanan" class="py-24 lg:py-32 bg-cream">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center max-w-2xl mx-auto mb-16 fade-up">
+                <span class="inline-block text-xs font-semibold uppercase tracking-[0.2em] text-brand-600 mb-4">Layanan Kami</span>
+                <h2 class="text-4xl lg:text-5xl font-semibold tracking-tight text-charcoal mb-6">Solusi Lengkap untuk<br>Kebutuhan Bangunan Anda</h2>
+                <p class="text-lg text-charcoal/60 leading-relaxed">Dari pembangunan hingga finishing, kami siap mengerjakan berbagai kebutuhan dengan standar kualitas tinggi.</p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="service-card group bg-white rounded-3xl p-8 lg:p-10 shadow-sm hover:shadow-xl transition-all duration-500 border border-gray-100/80 fade-up">
+                    <div class="service-icon w-16 h-16 rounded-2xl bg-brand-50 flex items-center justify-center mb-7">
+                        <i data-lucide="hard-hat" class="w-7 h-7 text-brand-700"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold tracking-tight text-charcoal mb-3">Tukang Bangunan</h3>
+                    <p class="text-charcoal/60 leading-relaxed mb-6">Pembangunan rumah baru, gedung, dan berbagai konstruksi dari pondasi hingga atap dengan tenaga kerja berpengalaman.</p>
+                    <ul class="space-y-3 mb-8">
+                        <li class="flex items-center gap-3 text-sm text-charcoal/70">
+                            <i data-lucide="check-circle-2" class="w-4 h-4 text-brand-500 flex-shrink-0"></i>
+                            Pondasi & Struktur
+                        </li>
+                        <li class="flex items-center gap-3 text-sm text-charcoal/70">
+                            <i data-lucide="check-circle-2" class="w-4 h-4 text-brand-500 flex-shrink-0"></i>
+                            Dinding & Plesteran
+                        </li>
+                        <li class="flex items-center gap-3 text-sm text-charcoal/70">
+                            <i data-lucide="check-circle-2" class="w-4 h-4 text-brand-500 flex-shrink-0"></i>
+                            Atap & Penutup
+                        </li>
+                        <li class="flex items-center gap-3 text-sm text-charcoal/70">
+                            <i data-lucide="check-circle-2" class="w-4 h-4 text-brand-500 flex-shrink-0"></i>
+                            Instalasi Listrik & Air
+                        </li>
+                    </ul>
+                    <a href="https://wa.me/6289503948517?text=Halo%20Bambang%20Tukang,%20saya%20tertarik%20dengan%20jasa%20tukang%20bangunan" target="_blank" class="inline-flex items-center gap-2 text-brand-700 font-medium text-sm group/link hover:gap-3 transition-all">
+                        Konsultasi Sekarang
+                        <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                    </a>
+                </div>
+
+                <div class="service-card group bg-white rounded-3xl p-8 lg:p-10 shadow-sm hover:shadow-xl transition-all duration-500 border border-gray-100/80 fade-up">
+                    <div class="service-icon w-16 h-16 rounded-2xl bg-sand-100 flex items-center justify-center mb-7">
+                        <i data-lucide="home" class="w-7 h-7 text-sand-700"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold tracking-tight text-charcoal mb-3">Renovasi Rumah</h3>
+                    <p class="text-charcoal/60 leading-relaxed mb-6">Renovasi parsial maupun total untuk memperbarui tampilan dan fungsi rumah sesuai kebutuhan Anda.</p>
+                    <ul class="space-y-3 mb-8">
+                        <li class="flex items-center gap-3 text-sm text-charcoal/70">
+                            <i data-lucide="check-circle-2" class="w-4 h-4 text-sand-500 flex-shrink-0"></i>
+                            Renovasi Interior
+                        </li>
+                        <li class="flex items-center gap-3 text-sm text-charcoal/70">
+                            <i data-lucide="check-circle-2" class="w-4 h-4 text-sand-500 flex-shrink-0"></i>
+                            Renovasi Eksterior
+                        </li>
+                        <li class="flex items-center gap-3 text-sm text-charcoal/70">
+                            <i data-lucide="check-circle-2" class="w-4 h-4 text-sand-500 flex-shrink-0"></i>
+                            Penambahan Ruangan
+                        </li>
+                        <li class="flex items-center gap-3 text-sm text-charcoal/70">
+                            <i data-lucide="check-circle-2" class="w-4 h-4 text-sand-500 flex-shrink-0"></i>
+                            Perbaikan Struktur
+                        </li>
+                    </ul>
+                    <a href="https://wa.me/6289503948517?text=Halo%20Bambang%20Tukang,%20saya%20tertarik%20dengan%20jasa%20renovasi%20rumah" target="_blank" class="inline-flex items-center gap-2 text-sand-700 font-medium text-sm group/link hover:gap-3 transition-all">
+                        Konsultasi Sekarang
+                        <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                    </a>
+                </div>
+
+                <div class="service-card group bg-white rounded-3xl p-8 lg:p-10 shadow-sm hover:shadow-xl transition-all duration-500 border border-gray-100/80 fade-up">
+                    <div class="service-icon w-16 h-16 rounded-2xl bg-amber-50 flex items-center justify-center mb-7">
+                        <i data-lucide="armchair" class="w-7 h-7 text-amber-700"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold tracking-tight text-charcoal mb-3">Tukang Mebel</h3>
+                    <p class="text-charcoal/60 leading-relaxed mb-6">Pembuatan furniture custom sesuai desain dan ukuran ruangan Anda dengan material pilihan berkualitas.</p>
+                    <ul class="space-y-3 mb-8">
+                        <li class="flex items-center gap-3 text-sm text-charcoal/70">
+                            <i data-lucide="check-circle-2" class="w-4 h-4 text-amber-500 flex-shrink-0"></i>
+                            Kitchen Set Custom
+                        </li>
+                        <li class="flex items-center gap-3 text-sm text-charcoal/70">
+                            <i data-lucide="check-circle-2" class="w-4 h-4 text-amber-500 flex-shrink-0"></i>
+                            Lemari & Almari
+                        </li>
+                        <li class="flex items-center gap-3 text-sm text-charcoal/70">
+                            <i data-lucide="check-circle-2" class="w-4 h-4 text-amber-500 flex-shrink-0"></i>
+                            Meja & Kursi Custom
+                        </li>
+                        <li class="flex items-center gap-3 text-sm text-charcoal/70">
+                            <i data-lucide="check-circle-2" class="w-4 h-4 text-amber-500 flex-shrink-0"></i>
+                            Interior Finishing
+                        </li>
+                    </ul>
+                    <a href="https://wa.me/6289503948517?text=Halo%20Bambang%20Tukang,%20saya%20tertarik%20dengan%20jasa%20tukang%20mebel" target="_blank" class="inline-flex items-center gap-2 text-amber-700 font-medium text-sm group/link hover:gap-3 transition-all">
+                        Konsultasi Sekarang
+                        <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="tentang" class="py-24 lg:py-32 bg-white">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="grid lg:grid-cols-2 gap-16 items-center">
+                <div class="relative fade-up">
+                    <div class="absolute -inset-4 bg-gradient-to-br from-brand-100 to-sand-100 rounded-3xl blur-sm"></div>
+                    <img
+                        src="tukang3.jpg"
+                        data-fallback="tukang3.jpg"
+                        alt="Bambang Tukang - Tips Biaya Renovasi"
+                        class="img-fallback relative rounded-3xl shadow-lg w-full aspect-[4/5] object-cover"
+                        onload="this.classList.add('loaded')"
+                        onerror="this.onerror=null;this.src=this.dataset.fallback;this.classList.add('loaded');"
+                    >
+                    <div class="absolute -bottom-4 -right-4 bg-brand-950 text-white rounded-2xl px-6 py-5 shadow-xl">
+                        <div class="text-3xl font-bold">10+</div>
+                        <div class="text-xs text-brand-300 font-medium uppercase tracking-wider">Tahun</div>
+                    </div>
+                </div>
+                <div class="fade-up">
+                    <span class="inline-block text-xs font-semibold uppercase tracking-[0.2em] text-brand-600 mb-4">Tentang Kami</span>
+                    <h2 class="text-4xl lg:text-5xl font-semibold tracking-tight text-charcoal mb-6">Dipercaya Sejak<br>Bertahun-tahun</h2>
+                    <p class="text-lg text-charcoal/60 leading-relaxed mb-8">
+                        Bambang Tukang hadir sebagai solusi terpercaya untuk kebutuhan konstruksi dan furniture Anda. Berbasis di Boyolali, kami telah melayani ratusan klien di berbagai wilayah dengan hasil yang memuaskan.
+                    </p>
+                    <div class="space-y-6 mb-10">
+                        <div class="flex items-start gap-4">
+                            <div class="w-10 h-10 rounded-xl bg-brand-50 flex items-center justify-center flex-shrink-0 mt-0.5">
+                                <i data-lucide="shield-check" class="w-5 h-5 text-brand-600"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-charcoal mb-1">Bergaransi & Terpercaya</h4>
+                                <p class="text-sm text-charcoal/60 leading-relaxed">Setiap pekerjaan kami berikan garansi untuk menjamin kepuasan dan ketenangan Anda.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-4">
+                            <div class="w-10 h-10 rounded-xl bg-brand-50 flex items-center justify-center flex-shrink-0 mt-0.5">
+                                <i data-lucide="clock" class="w-5 h-5 text-brand-600"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-charcoal mb-1">Tepat Waktu</h4>
+                                <p class="text-sm text-charcoal/60 leading-relaxed">Kami menghargai waktu Anda. Pengerjaan dilakukan sesuai timeline yang disepakati.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-4">
+                            <div class="w-10 h-10 rounded-xl bg-brand-50 flex items-center justify-center flex-shrink-0 mt-0.5">
+                                <i data-lucide="badge-indian-rupee" class="w-5 h-5 text-brand-600"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-charcoal mb-1">Harga Transparan</h4>
+                                <p class="text-sm text-charcoal/60 leading-relaxed">Tidak ada biaya tersembunyi. RAB detail diberikan sebelum pekerjaan dimulai.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <a href="https://wa.me/6289503948517?text=Halo%20Bambang%20Tukang,%20saya%20ingin%20tau%20lebih%20lanjut" target="_blank" class="inline-flex items-center gap-3 px-7 py-4 bg-brand-600 text-white font-medium rounded-2xl hover:bg-brand-700 transition-all duration-300 shadow-lg shadow-brand-600/25 hover:shadow-brand-600/40 hover:-translate-y-0.5">
+                        Kenali Lebih Dekat
+                        <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works -->
+    <section class="py-24 lg:py-32 bg-brand-950 relative overflow-hidden">
+        <div class="absolute top-0 right-0 w-96 h-96 bg-brand-800/30 rounded-full blur-3xl"></div>
+        <div class="absolute bottom-0 left-0 w-80 h-80 bg-brand-900/50 rounded-full blur-3xl"></div>
+        <div class="max-w-7xl mx-auto px-6 relative z-10">
+            <div class="text-center max-w-2xl mx-auto mb-16 fade-up">
+                <span class="inline-block text-xs font-semibold uppercase tracking-[0.2em] text-brand-400 mb-4">Proses Kerja</span>
+                <h2 class="text-4xl lg:text-5xl font-semibold tracking-tight text-white mb-6">Bagaimana Kami Bekerja</h2>
+                <p class="text-lg text-white/50 leading-relaxed">Empat langkah sederhana untuk mewujudkan proyek impian Anda.</p>
+            </div>
+            <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div class="text-center fade-up">
+                    <div class="w-16 h-16 rounded-2xl bg-white/10 backdrop-blur-md flex items-center justify-center mx-auto mb-6 border border-white/10">
+                        <span class="text-2xl font-bold text-brand-300">01</span>
+                    </div>
+                    <h3 class="text-lg font-semibold text-white mb-2">Konsultasi</h3>
+                    <p class="text-sm text-white/50 leading-relaxed">Hubungi kami via WhatsApp untuk diskusi awal kebutuhan proyek Anda.</p>
+                </div>
+                <div class="text-center fade-up">
+                    <div class="w-16 h-16 rounded-2xl bg-white/10 backdrop-blur-md flex items-center justify-center mx-auto mb-6 border border-white/10">
+                        <span class="text-2xl font-bold text-brand-300">02</span>
+                    </div>
+                    <h3 class="text-lg font-semibold text-white mb-2">Survey & RAB</h3>
+                    <p class="text-sm text-white/50 leading-relaxed">Kami datang ke lokasi, mengukur, dan menyusun Rencana Anggaran Biaya.</p>
+                </div>
+                <div class="text-center fade-up">
+                    <div class="w-16 h-16 rounded-2xl bg-white/10 backdrop-blur-md flex items-center justify-center mx-auto mb-6 border border-white/10">
+                        <span class="text-2xl font-bold text-brand-300">03</span>
+                    </div>
+                    <h3 class="text-lg font-semibold text-white mb-2">Pengerjaan</h3>
+                    <p class="text-sm text-white/50 leading-relaxed">Tim profesional mengerjakan proyek sesuai timeline dan spesifikasi.</p>
+                </div>
+                <div class="text-center fade-up">
+                    <div class="w-16 h-16 rounded-2xl bg-white/10 backdrop-blur-md flex items-center justify-center mx-auto mb-6 border border-white/10">
+                        <span class="text-2xl font-bold text-brand-300">04</span>
+                    </div>
+                    <h3 class="text-lg font-semibold text-white mb-2">Serah Terima</h3>
+                    <p class="text-sm text-white/50 leading-relaxed">Pengecekan bersama, finishing, dan serah terima dengan garansi resmi.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Area Section -->
+    <section id="area" class="py-24 lg:py-32 bg-cream">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center max-w-2xl mx-auto mb-16 fade-up">
+                <span class="inline-block text-xs font-semibold uppercase tracking-[0.2em] text-brand-600 mb-4">Area Layanan</span>
+                <h2 class="text-4xl lg:text-5xl font-semibold tracking-tight text-charcoal mb-6">Melayani Berbagai Wilayah</h2>
+                <p class="text-lg text-charcoal/60 leading-relaxed">Berdasarkan di Boyolali, kami melayani wilayah sekitar dengan jangkauan luas.</p>
+            </div>
+
+            <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="area-card bg-white rounded-2xl overflow-hidden border border-gray-100/80 shadow-sm fade-up">
+                    <div class="img-overlay h-48">
+                        <img
+                            src="boyolali.jpg"
+                            data-fallback="boyolali.jpg"
+                            alt="Boyolali"
+                            class="img-fallback w-full h-full object-cover"
+                            onload="this.classList.add('loaded')"
+                            onerror="this.onerror=null;this.src=this.dataset.fallback;this.classList.add('loaded');"
+                        >
+                    </div>
+                    <div class="p-6">
+                        <div class="inline-flex items-center gap-1.5 px-3 py-1 bg-brand-50 rounded-full mb-3">
+                            <span class="w-1.5 h-1.5 bg-brand-500 rounded-full"></span>
+                            <span class="text-[10px] font-semibold uppercase tracking-wider text-brand-700">Pusat</span>
+                        </div>
+                        <h3 class="text-lg font-semibold text-charcoal mb-1">Boyolali</h3>
+                        <p class="text-sm text-charcoal/50">Kota pusat operasional kami</p>
+                    </div>
+                </div>
+                <div class="area-card bg-white rounded-2xl overflow-hidden border border-gray-100/80 shadow-sm fade-up">
+                    <div class="img-overlay h-48">
+                        <img
+                            src="surakarta.webp"
+                            data-fallback="surakarta.webp"
+                            alt="Surakarta"
+                            class="img-fallback w-full h-full object-cover"
+                            onload="this.classList.add('loaded')"
+                            onerror="this.onerror=null;this.src=this.dataset.fallback;this.classList.add('loaded');"
+                        >
+                    </div>
+                    <div class="p-6">
+                        <div class="inline-flex items-center gap-1.5 px-3 py-1 bg-sand-100 rounded-full mb-3">
+                            <span class="w-1.5 h-1.5 bg-sand-500 rounded-full"></span>
+                            <span class="text-[10px] font-semibold uppercase tracking-wider text-sand-700">Layanan</span>
+                        </div>
+                        <h3 class="text-lg font-semibold text-charcoal mb-1">Surakarta</h3>
+                        <p class="text-sm text-charcoal/50">Kota Solo dan sekitarnya</p>
+                    </div>
+                </div>
+                <div class="area-card bg-white rounded-2xl overflow-hidden border border-gray-100/80 shadow-sm fade-up">
+                    <div class="img-overlay h-48">
+                        <img
+                            src="klaten.jpg"
+                            data-fallback="klaten.jpg"
+                            alt="Klaten"
+                            class="img-fallback w-full h-full object-cover"
+                            onload="this.classList.add('loaded')"
+                            onerror="this.onerror=null;this.src=this.dataset.fallback;this.classList.add('loaded');"
+                        >
+                    </div>
+                    <div class="p-6">
+                        <div class="inline-flex items-center gap-1.5 px-3 py-1 bg-sand-100 rounded-full mb-3">
+                            <span class="w-1.5 h-1.5 bg-sand-500 rounded-full"></span>
+                            <span class="text-[10px] font-semibold uppercase tracking-wider text-sand-700">Layanan</span>
+                        </div>
+                        <h3 class="text-lg font-semibold text-charcoal mb-1">Klaten</h3>
+                        <p class="text-sm text-charcoal/50">Seluruh wilayah Klaten</p>
+                    </div>
+                </div>
+                <div class="area-card bg-white rounded-2xl overflow-hidden border border-gray-100/80 shadow-sm fade-up">
+                    <div class="img-overlay h-48">
+                        <img
+                            src="solo.jpg"
+                            data-fallback="solo.jpg"
+                            alt="Sekitarnya"
+                            class="img-fallback w-full h-full object-cover"
+                            onload="this.classList.add('loaded')"
+                            onerror="this.onerror=null;this.src=this.dataset.fallback;this.classList.add('loaded');"
+                        >
+                    </div>
+                    <div class="p-6">
+                        <div class="inline-flex items-center gap-1.5 px-3 py-1 bg-brand-50 rounded-full mb-3">
+                            <span class="w-1.5 h-1.5 bg-brand-500 rounded-full"></span>
+                            <span class="text-[10px] font-semibold uppercase tracking-wider text-brand-700">Layanan</span>
+                        </div>
+                        <h3 class="text-lg font-semibold text-charcoal mb-1">Sekitarnya</h3>
+                        <p class="text-sm text-charcoal/50">Sragen, Karanganyar, Wonogiri, dll</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Portfolio Section -->
+    <section id="portofolio" class="py-24 lg:py-32 bg-white">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center max-w-2xl mx-auto mb-16 fade-up">
+                <span class="inline-block text-xs font-semibold uppercase tracking-[0.2em] text-brand-600 mb-4">Portofolio</span>
+                <h2 class="text-4xl lg:text-5xl font-semibold tracking-tight text-charcoal mb-6">Hasil Kerja Kami</h2>
+                <p class="text-lg text-charcoal/60 leading-relaxed">Beberapa proyek yang telah kami selesaikan dengan hasil yang memuaskan.</p>
+            </div>
+
+            <div class="flex justify-center gap-2 mb-12 fade-up">
+                <button class="portfolio-filter active px-5 py-2.5 rounded-xl text-sm font-medium transition-all duration-300" data-filter="all">Semua</button>
+                <button class="portfolio-filter px-5 py-2.5 rounded-xl text-sm font-medium transition-all duration-300" data-filter="bangunan">Bangunan</button>
+                <button class="portfolio-filter px-5 py-2.5 rounded-xl text-sm font-medium transition-all duration-300" data-filter="renovasi">Renovasi</button>
+                <button class="portfolio-filter px-5 py-2.5 rounded-xl text-sm font-medium transition-all duration-300" data-filter="mebel">Mebel</button>
+            </div>
+
+            <div id="portfolioGrid" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="portfolio-item img-overlay rounded-2xl overflow-hidden shadow-sm group cursor-pointer fade-up" data-category="bangunan">
+                    <img
+                        src="rumah1.jpg"
+                        data-fallback="rumah1.jpg"
+                        alt="Pembangunan Rumah"
+                        class="img-fallback w-full h-64 object-cover"
+                        onload="this.classList.add('loaded')"
+                        onerror="this.onerror=null;this.src=this.dataset.fallback;this.classList.add('loaded');"
+                    >
+                    <div class="absolute bottom-0 left-0 right-0 p-5 z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                        <span class="inline-block px-3 py-1 bg-brand-600/90 text-white text-xs font-medium rounded-full mb-2">Bangunan</span>
+                        <h4 class="text-white font-semibold">Pembangunan Rumah</h4>
+                        <p class="text-white/70 text-sm">Boyolali</p>
+                    </div>
+                </div>
+                <div class="portfolio-item img-overlay rounded-2xl overflow-hidden shadow-sm group cursor-pointer fade-up" data-category="renovasi">
+                    <img
+                        src="rumah2.jpg"
+                        data-fallback="rumah2.jpg"
+                        alt="Renovasi Rumah"
+                        class="img-fallback w-full h-64 object-cover"
+                        onload="this.classList.add('loaded')"
+                        onerror="this.onerror=null;this.src=this.dataset.fallback;this.classList.add('loaded');"
+                    >
+                    <div class="absolute bottom-0 left-0 right-0 p-5 z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                        <span class="inline-block px-3 py-1 bg-sand-600/90 text-white text-xs font-medium rounded-full mb-2">Renovasi</span>
+                        <h4 class="text-white font-semibold">Renovasi Rumah</h4>
+                        <p class="text-white/70 text-sm">Surakarta</p>
+                    </div>
+                </div>
+                <div class="portfolio-item img-overlay rounded-2xl overflow-hidden shadow-sm group cursor-pointer fade-up" data-category="mebel">
+                    <img
+                        src="rumah3.jpeg"
+                        data-fallback="rumah3.jpeg"
+                        alt="Kitchen Set Minimalis"
+                        class="img-fallback w-full h-64 object-cover"
+                        onload="this.classList.add('loaded')"
+                        onerror="this.onerror=null;this.src=this.dataset.fallback;this.classList.add('loaded');"
+                    >
+                    <div class="absolute bottom-0 left-0 right-0 p-5 z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                        <span class="inline-block px-3 py-1 bg-amber-600/90 text-white text-xs font-medium rounded-full mb-2">Mebel</span>
+                        <h4 class="text-white font-semibold">Kitchen Set Minimalis</h4>
+                        <p class="text-white/70 text-sm">Klaten</p>
+                    </div>
+                </div>
+                <div class="portfolio-item img-overlay rounded-2xl overflow-hidden shadow-sm group cursor-pointer fade-up" data-category="bangunan">
+                    <img
+                        src="rumah4.jpg"
+                        data-fallback="rumah4.jpg"
+                        alt="Pembangunan Ruko"
+                        class="img-fallback w-full h-64 object-cover"
+                        onload="this.classList.add('loaded')"
+                        onerror="this.onerror=null;this.src=this.dataset.fallback;this.classList.add('loaded');"
+                    >
+                    <div class="absolute bottom-0 left-0 right-0 p-5 z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                        <span class="inline-block px-3 py-1 bg-brand-600/90 text-white text-xs font-medium rounded-full mb-2">Bangunan</span>
+                        <h4 class="text-white font-semibold">Pembangunan Rumah 2 Lantai</h4>
+                        <p class="text-white/70 text-sm">Boyolali</p>
+                    </div>
+                </div>
+                <div class="portfolio-item img-overlay rounded-2xl overflow-hidden shadow-sm group cursor-pointer fade-up" data-category="mebel">
+                    <img
+                        src="lemari.jpg"
+                        data-fallback="lemari.jpg"
+                        alt="Lemari Pakaian Custom"
+                        class="img-fallback w-full h-64 object-cover"
+                        onload="this.classList.add('loaded')"
+                        onerror="this.onerror=null;this.src=this.dataset.fallback;this.classList.add('loaded');"
+                    >
+                    <div class="absolute bottom-0 left-0 right-0 p-5 z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                        <span class="inline-block px-3 py-1 bg-amber-600/90 text-white text-xs font-medium rounded-full mb-2">Mebel</span>
+                        <h4 class="text-white font-semibold">Lemari Pakaian Custom</h4>
+                        <p class="text-white/70 text-sm">Surakarta</p>
+                    </div>
+                </div>
+                <div class="portfolio-item img-overlay rounded-2xl overflow-hidden shadow-sm group cursor-pointer fade-up" data-category="renovasi">
+                    <img
+                        src="rumah5"
+                        data-fallback="rumah5.jpg"
+                        alt="Renovasi Fasad Rumah"
+                        class="img-fallback w-full h-64 object-cover"
+                        onload="this.classList.add('loaded')"
+                        onerror="this.onerror=null;this.src=this.dataset.fallback;this.classList.add('loaded');"
+                    >
+                    <div class="absolute bottom-0 left-0 right-0 p-5 z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                        <span class="inline-block px-3 py-1 bg-sand-600/90 text-white text-xs font-medium rounded-full mb-2">Renovasi</span>
+                        <h4 class="text-white font-semibold">Renovasi Fasad Rumah</h4>
+                        <p class="text-white/70 text-sm">Klaten</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="py-24 lg:py-32 bg-cream">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center max-w-2xl mx-auto mb-16 fade-up">
+                <span class="inline-block text-xs font-semibold uppercase tracking-[0.2em] text-brand-600 mb-4">Testimoni</span>
+                <h2 class="text-4xl lg:text-5xl font-semibold tracking-tight text-charcoal mb-6">Apa Kata Klien Kami</h2>
+            </div>
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="bg-white rounded-3xl p-8 shadow-sm border border-gray-100/80 fade-up">
+                    <div class="flex mb-4">
+                        <i data-lucide="star" class="w-4 h-4 text-amber-400 fill-amber-400"></i>
+                        <i data-lucide="star" class="w-4 h-4 text-amber-400 fill-amber-400"></i>
+                        <i data-lucide="star" class="w-4 h-4 text-amber-400 fill-amber-400"></i>
+                        <i data-lucide="star" class="w-4 h-4 text-amber-400 fill-amber-400"></i>
+                        <i data-lucide="star" class="w-4 h-4 text-amber-400 fill-amber-400"></i>
+                    </div>
+                    <p class="text-charcoal/70 leading-relaxed mb-6">"Rumah kami dibangun dengan sangat rapi dan sesuai desain. Pak Bambang sangat komunikatif dan hasilnya di atas ekspektasi. Sangat direkomendasikan!"</p>
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-full bg-brand-100 flex items-center justify-center">
+                            <span class="text-brand-700 font-semibold text-sm">SW</span>
+                        </div>
+                        <div>
+                            <div class="font-semibold text-charcoal text-sm">Sari Wulandari</div>
+                            <div class="text-xs text-charcoal/50">Boyolali</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-white rounded-3xl p-8 shadow-sm border border-gray-100/80 fade-up">
+                    <div class="flex mb-4">
+                        <i data-lucide="star" class="w-4 h-4 text-amber-400 fill-amber-400"></i>
+                        <i data-lucide="star" class="w-4 h-4 text-amber-400 fill-amber-400"></i>
+                        <i data-lucide="star" class="w-4 h-4 text-amber-400 fill-amber-400"></i>
+                        <i data-lucide="star" class="w-4 h-4 text-amber-400 fill-amber-400"></i>
+                        <i data-lucide="star" class="w-4 h-4 text-amber-400 fill-amber-400"></i>
+                    </div>
+                    <p class="text-charcoal/70 leading-relaxed mb-6">"Kitchen set custom-nya bagus banget! Bahan berkualitas dan pemasangannya rapi. Harga juga sangat masuk akal dibanding tempat lain."</p>
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-full bg-sand-100 flex items-center justify-center">
+                            <span class="text-sand-700 font-semibold text-sm">AP</span>
+                        </div>
+                        <div>
+                            <div class="font-semibold text-charcoal text-sm">Ahmad Prasetyo</div>
+                            <div class="text-xs text-charcoal/50">Surakarta</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-white rounded-3xl p-8 shadow-sm border border-gray-100/80 fade-up">
+                    <div class="flex mb-4">
+                        <i data-lucide="star" class="w-4 h-4 text-amber-400 fill-amber-400"></i>
+                        <i data-lucide="star" class="w-4 h-4 text-amber-400 fill-amber-400"></i>
+                        <i data-lucide="star" class="w-4 h-4 text-amber-400 fill-amber-400"></i>
+                        <i data-lucide="star" class="w-4 h-4 text-amber-400 fill-amber-400"></i>
+                        <i data-lucide="star" class="w-4 h-4 text-amber-400 fill-amber-400"></i>
+                    </div>
+                    <p class="text-charcoal/70 leading-relaxed mb-6">"Renovasi rumah kami selesai tepat waktu dan hasilnya memuaskan. Tim-nya profesional dan bersih saat bekerja. Terima kasih Pak Bambang!"</p>
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-full bg-amber-50 flex items-center justify-center">
+                            <span class="text-amber-700 font-semibold text-sm">RN</span>
+                        </div>
+                        <div>
+                            <div class="font-semibold text-charcoal text-sm">Rina Nurhayati</div>
+                            <div class="text-xs text-charcoal/50">Klaten</div>
+                        </div>
+                    </div>
+                </div>
+		<div class="bg-white rounded-3xl p-8 shadow-sm border border-gray-100/80 fade-up">
+                    <div class="flex mb-4">
+                        <i data-lucide="star" class="w-4 h-4 text-amber-400 fill-amber-400"></i>
+                        <i data-lucide="star" class="w-4 h-4 text-amber-400 fill-amber-400"></i>
+                        <i data-lucide="star" class="w-4 h-4 text-amber-400 fill-amber-400"></i>
+                        <i data-lucide="star" class="w-4 h-4 text-amber-400 fill-amber-400"></i>
+                        <i data-lucide="star" class="w-4 h-4 text-amber-400 fill-amber-400"></i>
+                    </div>
+                    <p class="text-charcoal/70 leading-relaxed mb-6">"Mas bambang..! Lemarinya bagus banget mas, aku sama suamiku suka banget mas. Matur suwun mas bambang!"</p>
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-full bg-amber-50 flex items-center justify-center">
+                            <span class="text-amber-700 font-semibold text-sm">SA</span>
+                        </div>
+                        <div>
+                            <div class="font-semibold text-charcoal text-sm">Siti Aminah</div>
+                            <div class="text-xs text-charcoal/50">Sragen</div>
+                        </div>
+                    </div>
+                </div>
+		<div class="bg-white rounded-3xl p-8 shadow-sm border border-gray-100/80 fade-up">
+                    <div class="flex mb-4">
+                        <i data-lucide="star" class="w-4 h-4 text-amber-400 fill-amber-400"></i>
+                        <i data-lucide="star" class="w-4 h-4 text-amber-400 fill-amber-400"></i>
+                        <i data-lucide="star" class="w-4 h-4 text-amber-400 fill-amber-400"></i>
+                        <i data-lucide="star" class="w-4 h-4 text-amber-400 fill-amber-400"></i>
+                        <i data-lucide="star" class="w-4 h-4 text-amber-400 fill-amber-400"></i>
+                    </div>
+                    <p class="text-charcoal/70 leading-relaxed mb-6">"Wes.. mantep tenan Mas gaweane sampean, matur suwun sampun gelem tekan mriki mas bambang.."</p>
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-full bg-amber-50 flex items-center justify-center">
+                            <span class="text-amber-700 font-semibold text-sm">AK</span>
+                        </div>
+                        <div>
+                            <div class="font-semibold text-charcoal text-sm">Agus Kuncoro</div>
+                            <div class="text-xs text-charcoal/50">Ngasem</div>
+                        </div>
+                    </div>
+                </div>
+		<div class="bg-white rounded-3xl p-8 shadow-sm border border-gray-100/80 fade-up">
+                    <div class="flex mb-4">
+                        <i data-lucide="star" class="w-4 h-4 text-amber-400 fill-amber-400"></i>
+                        <i data-lucide="star" class="w-4 h-4 text-amber-400 fill-amber-400"></i>
+                        <i data-lucide="star" class="w-4 h-4 text-amber-400 fill-amber-400"></i>
+                        <i data-lucide="star" class="w-4 h-4 text-amber-400 fill-amber-400"></i>
+                        <i data-lucide="star" class="w-4 h-4 text-amber-400 fill-amber-400"></i>
+                    </div>
+                    <p class="text-charcoal/70 leading-relaxed mb-6">"Mas.. sepurane lagi ngei repiew mas, jan gaweane sampean ki welok mas, wes mempeng, hasil bagus, jan tenan ora kleru aku mas. Suwun mas bambang"</p>
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-full bg-amber-50 flex items-center justify-center">
+                            <span class="text-amber-700 font-semibold text-sm">MN</span>
+                        </div>
+                        <div>
+                            <div class="font-semibold text-charcoal text-sm">Masngudin</div>
+                            <div class="text-xs text-charcoal/50">Colomadu</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-24 lg:py-32 bg-gradient-to-br from-brand-900 via-brand-800 to-brand-950 relative overflow-hidden">
+        <div class="absolute inset-0 opacity-10">
+            <div class="absolute top-10 left-10 w-40 h-40 border border-white/20 rounded-full"></div>
+            <div class="absolute bottom-10 right-10 w-60 h-60 border border-white/10 rounded-full"></div>
+            <div class="absolute top-1/2 left-1/3 w-20 h-20 border border-white/15 rounded-full"></div>
+        </div>
+        <div class="max-w-4xl mx-auto px-6 text-center relative z-10 fade-up">
+            <div class="inline-flex items-center gap-2 px-4 py-2 bg-white/10 backdrop-blur-md rounded-full border border-white/10 mb-8">
+                <i data-lucide="phone" class="w-3.5 h-3.5 text-brand-300"></i>
+                <span class="text-brand-200 text-xs font-medium uppercase tracking-wider">Siap Melayani Anda</span>
+            </div>
+            <h2 class="text-4xl lg:text-5xl font-semibold tracking-tight text-white mb-6">Wujudkan Proyek Impian Anda<br>Sekarang Juga</h2>
+            <p class="text-lg text-white/50 leading-relaxed max-w-2xl mx-auto mb-10">Konsultasi gratis via WhatsApp. Ceritakan kebutuhan Anda dan kami akan memberikan solusi terbaik.</p>
+            <div class="flex flex-wrap justify-center gap-4">
+                <a href="https://wa.me/6289503948517?text=Halo%20Bambang%20Tukang,%20saya%20ingin%20konsultasi%20gratis" target="_blank" class="inline-flex items-center gap-3 px-8 py-4 bg-white text-brand-900 font-semibold rounded-2xl hover:bg-brand-50 transition-all duration-300 shadow-xl shadow-black/20 hover:-translate-y-1 text-lg">
+                    <svg class="w-5 h-5 text-green-600" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                    Chat WhatsApp
+                </a>
+                <a href="tel:+6289503948517" class="inline-flex items-center gap-3 px-8 py-4 border-2 border-white/20 text-white font-semibold rounded-2xl hover:bg-white/10 backdrop-blur-sm transition-all duration-300 text-lg">
+                    <i data-lucide="phone-call" class="w-5 h-5"></i>
+                    +62 895-0394-8517
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="kontak" class="py-24 lg:py-32 bg-white">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="grid lg:grid-cols-2 gap-16">
+                <div class="fade-up">
+                    <span class="inline-block text-xs font-semibold uppercase tracking-[0.2em] text-brand-600 mb-4">Hubungi Kami</span>
+                    <h2 class="text-4xl lg:text-5xl font-semibold tracking-tight text-charcoal mb-6">Siap Membantu Proyek Anda</h2>
+                    <p class="text-lg text-charcoal/60 leading-relaxed mb-10">Jangan ragu untuk menghubungi kami. Tim kami siap memberikan konsultasi dan estimasi biaya gratis.</p>
+                    <div class="space-y-6">
+                        <a href="https://wa.me/6289503948517" target="_blank" class="flex items-center gap-5 p-5 rounded-2xl border border-gray-100 hover:border-brand-200 hover:bg-brand-50/50 transition-all duration-300 group">
+                            <div class="w-14 h-14 rounded-2xl bg-brand-50 flex items-center justify-center flex-shrink-0 group-hover:bg-brand-100 transition-colors">
+                                <svg class="w-6 h-6 text-green-600" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                            </div>
+                            <div>
+                                <div class="text-xs text-charcoal/50 font-medium uppercase tracking-wider mb-0.5">WhatsApp</div>
+                                <div class="font-semibold text-charcoal">+62 895-0394-8517</div>
+                            </div>
+                            <i data-lucide="arrow-up-right" class="w-4 h-4 text-charcoal/30 ml-auto group-hover:text-brand-600 transition-colors"></i>
+                        </a>
+                        <a href="tel:+6289503948517" class="flex items-center gap-5 p-5 rounded-2xl border border-gray-100 hover:border-brand-200 hover:bg-brand-50/50 transition-all duration-300 group">
+                            <div class="w-14 h-14 rounded-2xl bg-brand-50 flex items-center justify-center flex-shrink-0 group-hover:bg-brand-100 transition-colors">
+                                <i data-lucide="phone" class="w-6 h-6 text-brand-600"></i>
+                            </div>
+                            <div>
+                                <div class="text-xs text-charcoal/50 font-medium uppercase tracking-wider mb-0.5">Telepon</div>
+                                <div class="font-semibold text-charcoal">+62 895-0394-8517</div>
+                            </div>
+                            <i data-lucide="arrow-up-right" class="w-4 h-4 text-charcoal/30 ml-auto group-hover:text-brand-600 transition-colors"></i>
+                        </a>
+                        <div class="flex items-center gap-5 p-5 rounded-2xl border border-gray-100">
+                            <div class="w-14 h-14 rounded-2xl bg-brand-50 flex items-center justify-center flex-shrink-0">
+                                <i data-lucide="map-pin" class="w-6 h-6 text-brand-600"></i>
+                            </div>
+                            <div>
+                                <div class="text-xs text-charcoal/50 font-medium uppercase tracking-wider mb-0.5">Lokasi Pusat</div>
+                                <div class="font-semibold text-charcoal">Boyolali, Jawa Tengah</div>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-5 p-5 rounded-2xl border border-gray-100">
+                            <div class="w-14 h-14 rounded-2xl bg-brand-50 flex items-center justify-center flex-shrink-0">
+                                <i data-lucide="clock" class="w-6 h-6 text-brand-600"></i>
+                            </div>
+                            <div>
+                                <div class="text-xs text-charcoal/50 font-medium uppercase tracking-wider mb-0.5">Jam Operasional</div>
+                                <div class="font-semibold text-charcoal">Senin – Minggu, 07.00 – 20.00 WIB</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="fade-up">
+                    <form id="contactForm" class="bg-cream rounded-3xl p-8 lg:p-10 border border-gray-100/80">
+                        <h3 class="text-xl font-semibold text-charcoal mb-6">Kirim Pesan</h3>
+                        <div class="space-y-6">
+                            <div>
+                                <label class="block text-sm font-medium text-charcoal/70 mb-2">Nama Lengkap</label>
+                                <input type="text" id="formName" required placeholder="Masukkan nama Anda" class="w-full bg-white border border-gray-200 rounded-xl px-4 py-3.5 text-charcoal placeholder:text-charcoal/30 focus:outline-none focus:border-brand-500 focus:ring-2 focus:ring-brand-500/10 transition-all">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-charcoal/70 mb-2">No. WhatsApp</label>
+                                <input type="tel" id="formPhone" required placeholder="08xx-xxxx-xxxx" class="w-full bg-white border border-gray-200 rounded-xl px-4 py-3.5 text-charcoal placeholder:text-charcoal/30 focus:outline-none focus:border-brand-500 focus:ring-2 focus:ring-brand-500/10 transition-all">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-charcoal/70 mb-2">Layanan yang Dibutuhkan</label>
+                                <select id="formService" required class="w-full bg-white border border-gray-200 rounded-xl px-4 py-3.5 text-charcoal focus:outline-none focus:border-brand-500 focus:ring-2 focus:ring-brand-500/10 transition-all appearance-none" style="background-image: url('data:image/svg+xml;charset=UTF-8,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2224%22 height=%2224%22 viewBox=%220 0 24 24%22 fill=%22none%22 stroke=%22%2378716C%22 stroke-width=%222%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22%3E%3Cpath d=%22M6 9l6 6 6-6%22/%3E%3C/svg%3E'); background-repeat: no-repeat; background-position: right 12px center; background-size: 18px;">
+                                    <option value="">Pilih layanan...</option>
+                                    <option value="Tukang Bangunan">Tukang Bangunan</option>
+                                    <option value="Renovasi Rumah">Renovasi Rumah</option>
+                                    <option value="Tukang Mebel">Tukang Mebel</option>
+                                    <option value="Lainnya">Lainnya</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-charcoal/70 mb-2">Lokasi Proyek</label>
+                                <input type="text" id="formLocation" placeholder="Contoh: Boyolali Kota" class="w-full bg-white border border-gray-200 rounded-xl px-4 py-3.5 text-charcoal placeholder:text-charcoal/30 focus:outline-none focus:border-brand-500 focus:ring-2 focus:ring-brand-500/10 transition-all">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-charcoal/70 mb-2">Detail Kebutuhan</label>
+                                <textarea id="formMessage" rows="4" required placeholder="Jelaskan kebutuhan proyek Anda..." class="w-full bg-white border border-gray-200 rounded-xl px-4 py-3.5 text-charcoal placeholder:text-charcoal/30 focus:outline-none focus:border-brand-500 focus:ring-2 focus:ring-brand-500/10 transition-all resize-none"></textarea>
+                            </div>
+                            <button type="submit" class="w-full inline-flex items-center justify-center gap-3 px-7 py-4 bg-brand-600 text-white font-semibold rounded-2xl hover:bg-brand-700 transition-all duration-300 shadow-lg shadow-brand-600/25 hover:shadow-brand-600/40 hover:-translate-y-0.5">
+                                <i data-lucide="send" class="w-4 h-4"></i>
+                                Kirim via WhatsApp
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-brand-950 text-white">
+        <div class="max-w-7xl mx-auto px-6 py-16">
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-12">
+                <div class="lg:col-span-2">
+                    <div class="flex items-center gap-3 mb-5">
+                        <div class="w-10 h-10 rounded-xl bg-brand-600 flex items-center justify-center">
+                            <span class="text-white font-bold text-lg">B</span>
+                        </div>
+                        <div>
+                            <span class="font-semibold text-lg tracking-tight">Bambang Tukang</span>
+                        </div>
+                    </div>
+                    <p class="text-white/40 leading-relaxed max-w-sm mb-6">Jasa tukang bangunan, renovasi rumah, dan pembuatan mebel profesional berbasis di Boyolali, melayani Surakarta, Klaten, dan sekitarnya.</p>
+                    <div class="flex gap-3">
+                        <a href="https://wa.me/6289503948517" target="_blank" class="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center hover:bg-brand-600 transition-colors duration-300">
+                            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                        </a>
+                        <a href="tel:+6289503948517" class="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center hover:bg-brand-600 transition-colors duration-300">
+                            <i data-lucide="phone" class="w-4 h-4"></i>
+                        </a>
+                    </div>
+                </div>
+                <div>
+                    <h4 class="font-semibold text-sm uppercase tracking-wider text-white/70 mb-5">Layanan</h4>
+                    <ul class="space-y-3">
+                        <li><a href="#layanan" class="text-white/40 hover:text-brand-300 transition-colors text-sm">Tukang Bangunan</a></li>
+                        <li><a href="#layanan" class="text-white/40 hover:text-brand-300 transition-colors text-sm">Renovasi Rumah</a></li>
+                        <li><a href="#layanan" class="text-white/40 hover:text-brand-300 transition-colors text-sm">Tukang Mebel</a></li>
+                        <li><a href="#portofolio" class="text-white/40 hover:text-brand-300 transition-colors text-sm">Portofolio</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-semibold text-sm uppercase tracking-wider text-white/70 mb-5">Area Layanan</h4>
+                    <ul class="space-y-3">
+                        <li><a href="#area" class="text-white/40 hover:text-brand-300 transition-colors text-sm">Boyolali</a></li>
+                        <li><a href="#area" class="text-white/40 hover:text-brand-300 transition-colors text-sm">Surakarta</a></li>
+                        <li><a href="#area" class="text-white/40 hover:text-brand-300 transition-colors text-sm">Klaten</a></li>
+                        <li><a href="#area" class="text-white/40 hover:text-brand-300 transition-colors text-sm">Sekitarnya</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-white/10 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+                <p class="text-white/30 text-sm">&copy; 2025 Bambang Tukang. Semua hak dilindungi.</p>
+                <p class="text-white/30 text-sm">Boyolali, Jawa Tengah</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- WhatsApp Floating Button -->
+    <a href="https://wa.me/6289503948517?text=Halo%20Bambang%20Tukang,%20saya%20ingin%20bertanya" target="_blank" class="whatsapp-float inline-flex items-center justify-center w-14 h-14 bg-green-500 text-white rounded-full shadow-lg shadow-green-500/40 hover:bg-green-600 hover:shadow-green-500/60 hover:-translate-y-1 transition-all duration-300 group">
+        <svg class="w-7 h-7" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        <span class="absolute -top-10 right-0 bg-charcoal text-white text-xs font-medium px-3 py-1.5 rounded-lg whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-300 shadow-lg">Chat WhatsApp</span>
+    </a>
+
+    <!-- Toast -->
+    <div id="toast" class="toast fixed bottom-24 right-6 bg-white rounded-2xl shadow-xl border border-gray-100 p-4 flex items-center gap-3 z-[1000] max-w-sm">
+        <div class="w-10 h-10 rounded-xl bg-green-50 flex items-center justify-center flex-shrink-0">
+            <i data-lucide="check-circle-2" class="w-5 h-5 text-green-600"></i>
+        </div>
+        <div>
+            <div class="font-semibold text-sm text-charcoal">Berhasil!</div>
+            <div class="text-xs text-charcoal/50">Pesan dikirim via WhatsApp</div>
+        </div>
+    </div>
+
+    <script>
+        lucide.createIcons();
+
+        // Navbar scroll
+        const navbar = document.getElementById('navbar');
+        const updateNavbar = () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add('bg-white/95', 'backdrop-blur-xl', 'shadow-sm');
+                navbar.classList.remove('bg-transparent');
+                document.querySelectorAll('.nav-text-color').forEach(el => { el.classList.remove('text-white'); el.classList.add('text-charcoal'); });
+                document.querySelectorAll('.nav-sub-color').forEach(el => { el.classList.remove('text-white/60'); el.classList.add('text-charcoal/50'); });
+                document.querySelectorAll('.nav-link-color').forEach(el => { el.classList.remove('text-white/80'); el.classList.add('text-charcoal/70'); });
+            } else {
+                navbar.classList.remove('bg-white/95', 'backdrop-blur-xl', 'shadow-sm');
+                navbar.classList.add('bg-transparent');
+                document.querySelectorAll('.nav-text-color').forEach(el => { el.classList.add('text-white'); el.classList.remove('text-charcoal'); });
+                document.querySelectorAll('.nav-sub-color').forEach(el => { el.classList.add('text-white/60'); el.classList.remove('text-charcoal/50'); });
+                document.querySelectorAll('.nav-link-color').forEach(el => { el.classList.add('text-white/80'); el.classList.remove('text-charcoal/70'); });
+            }
+        };
+        window.addEventListener('scroll', updateNavbar);
+        updateNavbar();
+
+        // Mobile menu
+        const menuBtn = document.getElementById('menuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+        menuBtn.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
+        document.querySelectorAll('.mobile-link').forEach(link => link.addEventListener('click', () => mobileMenu.classList.add('hidden')));
+
+        // Scroll animations
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
+        }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+        document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+        // Counter animation
+        const counterObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const el = entry.target;
+                    const target = parseInt(el.dataset.count);
+                    const suffix = el.textContent.includes('+') ? '+' : '';
+                    let current = 0;
+                    const step = Math.ceil(target / 40);
+                    const timer = setInterval(() => {
+                        current += step;
+                        if (current >= target) { current = target; clearInterval(timer); }
+                        el.textContent = current + suffix;
+                    }, 30);
+                    counterObserver.unobserve(el);
+                }
+            });
+        }, { threshold: 0.5 });
+        document.querySelectorAll('[data-count]').forEach(el => counterObserver.observe(el));
+
+        // Portfolio filter
+        const filterBtns = document.querySelectorAll('.portfolio-filter');
+        const portfolioItems = document.querySelectorAll('.portfolio-item');
+        const updateFilterStyles = () => {
+            filterBtns.forEach(btn => {
+                if (btn.classList.contains('active')) { btn.style.background = '#0D9478'; btn.style.color = '#fff'; }
+                else { btn.style.background = '#F3F4F6'; btn.style.color = '#4B5563'; }
+            });
+        };
+        updateFilterStyles();
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                filterBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                updateFilterStyles();
+                const filter = btn.dataset.filter;
+                portfolioItems.forEach(item => {
+                    if (filter === 'all' || item.dataset.category === filter) {
+                        item.style.display = 'block';
+                        item.style.opacity = '0'; item.style.transform = 'scale(0.95)';
+                        setTimeout(() => { item.style.transition = 'all 0.4s cubic-bezier(0.4,0,0.2,1)'; item.style.opacity = '1'; item.style.transform = 'scale(1)'; }, 50);
+                    } else {
+                        item.style.transition = 'all 0.3s'; item.style.opacity = '0'; item.style.transform = 'scale(0.95)';
+                        setTimeout(() => { item.style.display = 'none'; }, 300);
+                    }
+                });
+            });
+        });
+
+        // Contact form → WhatsApp
+        const contactForm = document.getElementById('contactForm');
+        const toast = document.getElementById('toast');
+        contactForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const name = document.getElementById('formName').value.trim();
+            const phone = document.getElementById('formPhone').value.trim();
+            const service = document.getElementById('formService').value;
+            const location = document.getElementById('formLocation').value.trim();
+            const message = document.getElementById('formMessage').value.trim();
+            const waText = `Halo Bambang Tukang, saya ingin konsultasi.\n\n*Nama:* ${name}\n*No. HP:* ${phone}\n*Layanan:* ${service}\n*Lokasi:* ${location || '-'}\n*Detail:* ${message}`;
+            const waUrl = `https://wa.me/6289503948517?text=${encodeURIComponent(waText)}`;
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 3000);
+            setTimeout(() => window.open(waUrl, '_blank'), 500);
+            contactForm.reset();
+        });
+    </script>
+</body>
+</html>
